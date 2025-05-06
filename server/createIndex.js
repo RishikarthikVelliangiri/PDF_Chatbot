@@ -1,6 +1,14 @@
 // server/createIndex.js
 import { Pinecone } from '@pinecone-database/pinecone';
 import config from './config/default.js';
+import dotenv from 'dotenv';
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
+
+// Configure dotenv to load .env file
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+dotenv.config({ path: join(__dirname, 'config', '.env') });
 
 async function createIndex() {
   const pc = new Pinecone({
@@ -9,8 +17,12 @@ async function createIndex() {
 
   try {
     // Check if index already exists
-    const indexList = await pc.listIndexes();
-    if (indexList.includes(config.pinecone.indexName)) {
+    const { indexes } = await pc.listIndexes();
+    console.log('Existing indexes:', indexes);
+    
+    // Check if our index exists in the list
+    const indexExists = indexes.some(index => index.name === config.pinecone.indexName);
+    if (indexExists) {
       console.log(`Index ${config.pinecone.indexName} already exists`);
       return;
     }
@@ -29,6 +41,9 @@ async function createIndex() {
     console.log('Index creation result:', result);
   } catch (error) {
     console.error('Error creating index:', error);
+    if (error.response) {
+      console.error('Error details:', error.response.data);
+    }
   }
 }
 

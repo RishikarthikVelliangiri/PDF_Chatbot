@@ -1,6 +1,14 @@
 import express from 'express';
 import cors from 'cors';
 import session from 'express-session';
+import dotenv from 'dotenv';
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
+
+// Configure dotenv to load .env file
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+dotenv.config({ path: join(__dirname, 'config', '.env') });
 
 import chatRoutes from './routes/chatRoutes.js';
 

@@ -1,4 +1,21 @@
 // server/config/default.js
+import dotenv from 'dotenv';
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
+
+// Configure dotenv
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+dotenv.config({ path: join(__dirname, '.env') });
+
+// Validate required environment variables
+const requiredEnvVars = ['PINECONE_API_KEY', 'GEMINI_API_KEY'];
+for (const envVar of requiredEnvVars) {
+  if (!process.env[envVar]) {
+    throw new Error(`Missing required environment variable: ${envVar}`);
+  }
+}
+
 export default {
   port: process.env.PORT || 5000,
   gemini: {
