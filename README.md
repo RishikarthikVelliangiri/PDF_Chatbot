@@ -1,32 +1,110 @@
 # PDF Chatbot Application
 
-This project is a full-stack application that allows users to upload a PDF file and ask questions based on its content. It uses:
-- **Gemini API** for language model operations (embeddings and chat completions).
-- **Pinecone** as the vector database to store and query embeddings.
-- **LlamaIndex** logic for PDF ingestion and querying.
-- **React** for the front-end UI.
-- **Express** (Node.js) for the back-end server.
+A full-stack application that enables users to upload PDFs and have interactive conversations about their content using AI. Built with React, Node.js, Gemini AI, and Pinecone vector database.
 
-## Setup
+## Features
 
-1. **Server Setup:**
-   - Navigate to the `server/` directory.
-   - Create a `.env` file inside `server/config/` with your API keys:
+- PDF document upload and processing
+- Interactive chat interface
+- Context-aware responses using AI
+- Vector search for relevant content
+- Real-time chat history
+- Responsive design with dark mode
+- Split panel interface for PDF preview
+
+## Prerequisites
+
+- Node.js (v14 or higher)
+- NPM (v6 or higher)
+- Google Cloud Gemini API key
+- Pinecone API key and environment
+
+## Setup Instructions
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/RishikarthikVelliangiri/PDF_Chatbot.git
+   cd PDF_Chatbot
+   ```
+
+2. Install dependencies for both client and server:
+   ```bash
+   # Install root dependencies
+   npm install
+
+   # Install client dependencies
+   cd client
+   npm install
+
+   # Install server dependencies
+   cd ../server
+   npm install
+   ```
+
+3. Configure environment variables:
+   - Navigate to `server/config/`
+   - Copy `.env.template` to create a new `.env` file
+   - Fill in your API keys and environment variables:
      ```
      GEMINI_API_KEY=your_gemini_api_key_here
      PINECONE_API_KEY=your_pinecone_api_key_here
+     PINECONE_ENVIRONMENT=your_pinecone_environment_here
      PORT=5000
      ```
-   - Install dependencies: `npm install`
-   - Start the server: `npm run dev`
 
-2. **Client Setup:**
-   - Navigate to the `client/` directory.
-   - Install dependencies: `npm install`
-   - Start the client: `npm start`
+4. Initialize Pinecone index (one-time setup):
+   ```bash
+   cd server
+   node createIndex.js
+   ```
+
+5. Start the application:
+
+   In the server directory:
+   ```bash
+   npm run dev
+   ```
+
+   In the client directory (new terminal):
+   ```bash
+   npm start
+   ```
+
+The application should now be running on:
+- Frontend: http://localhost:3000
+- Backend: http://localhost:5000
 
 ## Usage
 
-- Upload a PDF file via the UI.
-- Ask questions related to the PDF content.
-- The back-end processes the PDF, stores embeddings in Pinecone, and uses the Gemini API to generate answers.
+1. Open the application in your browser
+2. Click "New Chat" to start a conversation
+3. Upload a PDF using the interface on the right
+4. Start asking questions about the PDF content
+5. The AI will provide context-aware responses based on the document
+
+## Architecture
+
+- **Frontend**: React with Material-UI and Framer Motion
+- **Backend**: Node.js with Express
+- **Vector Database**: Pinecone for semantic search
+- **AI Model**: Google's Gemini AI for embeddings and chat
+- **PDF Processing**: PDF parsing and chunking for efficient processing
+
+## Security
+
+- API keys are stored in environment variables
+- PDF processing is done server-side
+- Chat sessions are isolated
+- Rate limiting implemented for API calls
+
+## Contributing
+
+1. Fork the repository
+2. Create your feature branch: `git checkout -b feature/YourFeature`
+3. Commit your changes: `git commit -m 'Add YourFeature'`
+4. Push to the branch: `git push origin feature/YourFeature`
+5. Submit a pull request
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
