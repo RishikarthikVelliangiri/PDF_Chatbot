@@ -16,8 +16,16 @@ A full-stack application that enables users to upload PDFs and have interactive 
 
 - Node.js (v14 or higher)
 - NPM (v6 or higher)
-- Google Cloud Gemini API key
-- Pinecone API key and environment
+- Google Cloud Gemini API key - Get it from [Google AI Studio](https://makersuite.google.com/app/apikey)
+- Pinecone API key and environment - Get it from [Pinecone Console](https://app.pinecone.io/)
+
+## Security Notice ⚠️
+
+This application requires API keys to function. Never commit these keys to version control:
+- Store them in `.env` files that are git-ignored
+- Never share your API keys publicly
+- Rotate keys if they are accidentally exposed
+- Consider using environment variables in production
 
 ## Setup Instructions
 
@@ -43,8 +51,11 @@ A full-stack application that enables users to upload PDFs and have interactive 
 
 3. Configure environment variables:
    - Navigate to `server/config/`
-   - Copy `.env.template` to create a new `.env` file
-   - Fill in your API keys and environment variables:
+   - Copy `.env.template` to create a new `.env` file:
+     ```bash
+     cp .env.template .env
+     ```
+   - Fill in your API keys in the new `.env` file:
      ```
      GEMINI_API_KEY=your_gemini_api_key_here
      PINECONE_API_KEY=your_pinecone_api_key_here
@@ -90,12 +101,23 @@ The application should now be running on:
 - **AI Model**: Google's Gemini AI for embeddings and chat
 - **PDF Processing**: PDF parsing and chunking for efficient processing
 
-## Security
+## Security Best Practices
 
 - API keys are stored in environment variables
 - PDF processing is done server-side
 - Chat sessions are isolated
 - Rate limiting implemented for API calls
+- Input validation and sanitization
+- Secure file handling
+
+## Error Handling
+
+The application includes comprehensive error handling:
+- API call retries with exponential backoff
+- Validation of environment variables
+- Graceful fallbacks for API failures
+- Client-side error boundaries
+- Server-side error logging
 
 ## Contributing
 
@@ -105,6 +127,15 @@ The application should now be running on:
 4. Push to the branch: `git push origin feature/YourFeature`
 5. Submit a pull request
 
+## Troubleshooting
+
+If you encounter issues:
+1. Ensure all environment variables are set correctly
+2. Check that Pinecone index is initialized
+3. Verify API keys are valid and have necessary permissions
+4. Check server logs for detailed error messages
+5. Ensure all dependencies are installed correctly
+
 ## License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
